@@ -1,0 +1,45 @@
+<html>
+ <head>
+<!-- Ensures proper rendering and touch zooming -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Includes jQuery Mobile stylesheets -->
+<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+
+<!-- Includes the jQuery library -->
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<!-- Includes the jQuery Mobile library -->
+<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+</head> 
+<body>
+
+<div data-role="page">
+  <div data-role="header">
+    <h1>Welcome To The Shopping List</h1>
+  </div>
+
+<input id="itemsFilter" data-type="search" placeholder="Search For Shopping Items....">
+
+<div data-role="header">
+<h1>Vegetable Names </h1>
+</div>
+
+<ul data-role="listview" data-filter="true" data-input="#itemsFilter" data-autodividers="true">
+<li><a href="#">Apple</a></li>
+<li><a href="#">Banana</a></li>
+<li><a href="#">Carrot</a></li>
+<li><a href="#">Orange</a></li>
+<li><a href="#">Pear</a></li>
+<li><a href="#">Strawberry</a></li>
+<li><a href="#">Tomato</a></li>
+</ul>
+
+
+
+
+
+
+
+</body>
+</html>
