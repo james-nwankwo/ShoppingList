@@ -1,0 +1,400 @@
+<html>
+<head>
+<!-- Ensures proper rendering and touch zooming -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Includes jQuery Mobile stylesheets -->
+<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+
+<!-- Includes the jQuery library -->
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<!-- Includes the jQuery Mobile library -->
+<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+<!-- Includes the Spinner -->
+<script type="text/javascript" src="http://dev.jtsage.com/cdn/spinbox/latest/jqm-spinbox.min.js"></script>
+</head> 
+<body>
+
+<script>
+var chosenItems = {};
+
+$( document ).ready(function() {
+    var q = localStorage.getItem("previousList");
+	if (q!=null) chosenItems = JSON.parse(q);
+});
+
+function gotoChooseQuantity(obj)
+{
+	itemschosen = $(obj).text();
+	$("#itemname").text(itemschosen);
+	$.mobile.changePage("#choosequantity");
+	
+}
+
+function gotoBreakfastItems()
+{	$.mobile.changePage("#breakfastItems");}
+
+function gotoCondiments()
+{	$.mobile.changePage("#Condiments");}
+
+function gotoCleaners()
+{	$.mobile.changePage("#Cleaners");}
+
+function gotoDairyItems()
+{	$.mobile.changePage("#DairyItems");}
+
+function gotoDrinks()
+{	$.mobile.changePage("#Drinks");}
+
+function gotoFrozen()
+{	$.mobile.changePage("#Frozen");}
+
+function gotoFruits()
+{	$.mobile.changePage("#Fruits");}
+
+function gotoToiletries()
+{	$.mobile.changePage("#Toiletries");}
+
+function gotoVegetables()
+{	$.mobile.changePage("#Vegetables");}
+
+function showChosenItems()
+{	
+	
+	for (var key in chosenItems) {
+     
+	  itemData = key + ":" +  chosenItems[key];
+	  $('<li>').append('<a href="#">' + itemData + '</a>').appendTo('#shoppingList');	  
+	  
+  	 }
+
+	$.mobile.changePage("#showShoppingList");
+		 $("#shoppingList").listview('refresh');
+}
+
+function backtomainpage()
+{
+	$.mobile.changePage("#mainpage");
+	$("#spin").val(0);
+}
+
+function confirm()
+{
+	saveitems();
+	$("#spin").val(0);
+}
+
+
+function backtomainpageagain()
+{
+	$.mobile.changePage("#mainpage");
+	$("#spin").val(0);
+}
+
+function saveitems()
+{
+	itemschosen = $("#itemname").text();
+	itemquantity = $("#spin").val();
+	$('#confirmitem').text(itemschosen + " : " + itemquantity);
+	$("#myPopup").popup("open");
+	setTimeout(function(){  
+		$("#spin").val(0);
+		$("#itemname").text("");
+		$("#myPopup").popup("close"); 
+		}, 1000);
+	chosenItems[itemschosen] = itemquantity;
+	localStorage.setItem("previousList",JSON.stringify(chosenItems));
+	$.mobile.changePage("#mainpage");
+} 
+
+function clearlocalstorage()
+{
+localStorage.clear(); 
+$("#shoppingList").listview('refresh');
+location.reload();
+}
+
+</script>
+
+<div data-role="page" id="mainpage">
+  <div data-role="header"><h1>Welcome To The Shopping List</h1></div>
+  <div data-role="main" class="ui-content">
+    <div data-role="controlgroup" data-type="horizontal">
+      <a href="#" class="ui-btn" onclick="showChosenItems()">Saved Items</a>
+    </div><br>
+	<h2>Shopping Items</h2>
+	<form class="ui-filterable">
+	   <input id="itemsFilter" data-type="search" placeholder="Search For Shopping Items....">
+	</form>
+	<ul data-role="listview" data-filter="true" data-input="#itemsFilter" data-autodividers="true" data-inset="true">
+		<li><a onclick="gotoBreakfastItems()">Breakfast Items</a><li>
+		<li><a onclick="gotoCondiments()">Condiments</a><li>
+		<li><a onclick="gotoCleaners()">Cleaners</a><li>
+		<li><a onclick="gotoDairyItems()">Dairy Items</a><li>
+		<li><a onclick="gotoDrinks()">Drinks</a><li>
+		<li><a onclick="gotoFrozen()">Frozen Items</a><li>
+		<li><a onclick="gotoFruits()">Fruits</a><li>
+		<li><a onclick="gotoToiletries()">Toiletries</a><li>
+		<li><a onclick="gotoVegetables()">Vegetables</a><li>
+	</ul>
+</div>
+</div>
+
+<div data-role="page" id="breakfastItems">
+  <div data-role="header"><h2>Breakfast Items</h2></div>
+  <div data-role="main" class="ui-content">
+<div data-role="controlgroup" data-type="horizontal">
+      <a href="#" class="ui-btn" onclick="backtomainpageagain()">Home</a>
+      <a href="#" class="ui-btn" onclick="showChosenItems()">Saved Items</a>
+    </div>
+	<h2>Items</h2>
+	<form class="ui-filterable">
+	   <input id="itemsFilter" data-type="search" placeholder="Search For Shopping Items....">
+	</form>
+	<ul data-role="listview" data-filter="true" data-input="#itemsFilter" data-autodividers="true" data-inset="true">
+		<li><a onclick="gotoChooseQuantity(this)">Bread</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Butter</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Baked Beans</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Croissant</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Egg</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Porridge</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Scone</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Waffle</a><li>
+	</ul>
+</div>
+</div>
+
+<div data-role="page" id="Condiments">
+  <div data-role="header"><h1>Condiments</h1>
+</div>
+  <div data-role="main" class="ui-content">
+<div data-role="controlgroup" data-type="horizontal">
+      <a href="#" class="ui-btn" onclick="backtomainpageagain()">Home</a>
+      <a href="#" class="ui-btn" onclick="showChosenItems()">Saved Items</a>
+    </div><br>
+	<h2>Items</h2>
+	<form class="ui-filterable">
+	   <input id="itemsFilter" data-type="search" placeholder="Search For Shopping Items....">
+	</form>
+	<ul data-role="listview" data-filter="true" data-input="#itemsFilter" data-autodividers="true" data-inset="true">
+		<li><a onclick="gotoChooseQuantity(this)">BBQ Sauce</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Honey</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Ketchup</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Mayonnaise</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Mustard</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Peanut Butter</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Soy Sauce</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Syrup</a><li>
+	</ul>
+</div>
+</div>
+
+<div data-role="page" id="Cleaners">
+  <div data-role="header"><h1>Cleaning Items</h1>
+</div>
+  <div data-role="main" class="ui-content">
+<div data-role="controlgroup" data-type="horizontal">
+      <a href="#" class="ui-btn" onclick="backtomainpageagain()">Home</a>
+      <a href="#" class="ui-btn" onclick="showChosenItems()">Saved Items</a>
+    </div><br>
+	<h2>Items</h2>
+	<form class="ui-filterable">
+	   <input id="itemsFilter" data-type="search" placeholder="Search For Shopping Items....">
+	</form>
+	<ul data-role="listview" data-filter="true" data-input="#itemsFilter" data-autodividers="true" data-inset="true">
+		<li><a onclick="gotoChooseQuantity(this)">Air Freshner</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Bleach</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Detergent</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Sponges</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Towels</a><li>
+	</ul>
+</div>
+</div>
+
+<div data-role="page" id="DairyItems">
+  <div data-role="header"><h1>Dairy Items</h1>
+</div>
+  <div data-role="main" class="ui-content">
+<div data-role="controlgroup" data-type="horizontal">
+      <a href="#" class="ui-btn" onclick="backtomainpageagain()">Home</a>
+      <a href="#" class="ui-btn" onclick="showChosenItems()">Saved Items</a>
+    </div><br>
+	<h2>Items</h2>
+	<form class="ui-filterable">
+	   <input id="itemsFilter" data-type="search" placeholder="Search For Shopping Items....">
+	</form>
+	<ul data-role="listview" data-filter="true" data-input="#itemsFilter" data-autodividers="true" data-inset="true">
+		<li><a onclick="gotoChooseQuantity(this)">Cheese</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Cream Cheese</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Margarine</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Milk</a><li>
+	        <li><a onclick="gotoChooseQuantity(this)">Sour Cream</a><li>
+	</ul>
+</div>
+</div>
+
+<div data-role="page" id="Drinks">
+  <div data-role="header"><h1>Drinks</h1>
+</div>
+  <div data-role="main" class="ui-content">
+<div data-role="controlgroup" data-type="horizontal">
+      <a href="#" class="ui-btn" onclick="backtomainpageagain()">Home</a>
+      <a href="#" class="ui-btn" onclick="showChosenItems()">Saved Items</a>
+    </div><br>
+	<h2>Items</h2>
+	<form class="ui-filterable">
+	   <input id="itemsFilter" data-type="search" placeholder="Search For Shopping Items....">
+	</form>
+	<ul data-role="listview" data-filter="true" data-input="#itemsFilter" data-autodividers="true" data-inset="true">
+		<li><a onclick="gotoChooseQuantity(this)">Apple Juice</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Coffee</a><li>
+		<li><a onclick="gotoChooseQuantity(this)"Flavoured Water</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Orange Juice</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Soft Drinks</a><li>
+	        <li><a onclick="gotoChooseQuantity(this)">Sports Drinks</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Tea</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Water</a><li>
+	</ul>
+</div>
+</div>
+
+<div data-role="page" id="Frozen">
+  <div data-role="header"><h1>Frozen Items</h1>
+</div>
+  <div data-role="main" class="ui-content">
+<div data-role="controlgroup" data-type="horizontal">
+      <a href="#" class="ui-btn" onclick="backtomainpageagain()">Home</a>
+      <a href="#" class="ui-btn" onclick="showChosenItems()">Saved Items</a>
+    </div><br>
+	<h2>Items</h2>
+	<form class="ui-filterable">
+	   <input id="itemsFilter" data-type="search" placeholder="Search For Shopping Items....">
+	</form>
+	<ul data-role="listview" data-filter="true" data-input="#itemsFilter" data-autodividers="true" data-inset="true">
+		<li><a onclick="gotoChooseQuantity(this)">Frozen Broccoli</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Frozen Corn</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Frozen Dinners</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">French Fries</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Ice Cream</a><li>
+	        <li><a onclick="gotoChooseQuantity(this)">Mixed Veg</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Pizza</a><li>
+	</ul>
+</div>
+</div>
+
+<div data-role="page" id="Fruits">
+  <div data-role="header"><h1>Fruits</h1>
+</div>
+  <div data-role="main" class="ui-content">
+<div data-role="controlgroup" data-type="horizontal">
+      <a href="#" class="ui-btn" onclick="backtomainpageagain()">Home</a>
+      <a href="#" class="ui-btn" onclick="showChosenItems()">Saved Items</a>
+    </div><br>
+	<h2>Items</h2>
+	<form class="ui-filterable">
+	   <input id="itemsFilter" data-type="search" placeholder="Search For Shopping Items....">
+	</form>
+	<ul data-role="listview" data-filter="true" data-input="#itemsFilter" data-autodividers="true" data-inset="true">
+		<li><a onclick="gotoChooseQuantity(this)">Apples</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Bananas</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Berries</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Grapes</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Lemons</a><li>
+	        <li><a onclick="gotoChooseQuantity(this)">Lime</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Melons</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Oranges</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Peaches</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Pears</a><li>
+	        <li><a onclick="gotoChooseQuantity(this)">Plums</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Watermelon</a><li>	
+	</ul>
+</div>
+</div>
+
+<div data-role="page" id="Toiletries">
+  <div data-role="header"><h1>Toiletries</h1>
+</div>
+  <div data-role="main" class="ui-content">
+<div data-role="controlgroup" data-type="horizontal">
+      <a href="#" class="ui-btn" onclick="backtomainpageagain()">Home</a>
+      <a href="#" class="ui-btn" onclick="showChosenItems()">Saved Items</a>
+    </div><br>
+	<h2>Items</h2>
+	<form class="ui-filterable">
+	   <input id="itemsFilter" data-type="search" placeholder="Search For Shopping Items....">
+	</form>
+	<ul data-role="listview" data-filter="true" data-input="#itemsFilter" data-autodividers="true" data-inset="true">
+		<li><a onclick="gotoChooseQuantity(this)">Anti-Bacterial Soap</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Cream</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Deodorant</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Mouthwash</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Razors</a><li>
+	        <li><a onclick="gotoChooseQuantity(this)">Shampoo</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Soap</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Toothbrush</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Toothpaste</a><li>
+	</ul>
+</div>
+</div>
+
+<div data-role="page" id="Vegetables">
+  <div data-role="header"><h1>Vegetables</h1>
+</div>
+  <div data-role="main" class="ui-content">
+<div data-role="controlgroup" data-type="horizontal">
+      <a href="#" class="ui-btn" onclick="backtomainpageagain()">Home</a>
+      <a href="#" class="ui-btn" onclick="showChosenItems()">Saved Items</a>
+    </div><br>
+	<h2>Items</h2>
+	<form class="ui-filterable">
+	   <input id="itemsFilter" data-type="search" placeholder="Search For Shopping Items....">
+	</form>
+	<ul data-role="listview" data-filter="true" data-input="#itemsFilter" data-autodividers="true" data-inset="true">
+		<li><a onclick="gotoChooseQuantity(this)">Broccoli</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Cabbage</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Carrots</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Cauliflower</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Celery</a><li>
+	        <li><a onclick="gotoChooseQuantity(this)">Garlic</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Lettuce</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Mushrooms</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Onions</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Peppers</a><li>
+		<li><a onclick="gotoChooseQuantity(this)">Tomatoes</a><li>
+	</ul>
+</div>
+</div>
+
+<div data-role="page" id="choosequantity">
+<div data-role="header"><h1>Quantity Selection</h1></div>
+  <div data-role="main" class="ui-content">
+  <h1 id="itemname"></h1>
+  <div class="ui-field-contain">
+  	<label for="spin">Choose Amount</label>
+  	<input type="text" data-role="spinbox" name="spin" id="spin" value="0" min="0" max="20" />
+  </div>
+	<button onclick="confirm()">Confirm</button>
+	<button onclick="backtomainpage()">Back To Main Menu</button>
+	<button onclick="showChosenItems()">Show Chosen Items</button>
+  <div data-role="popup" id="myPopup">
+		<p id="confirmitem">This is a simple popup.</p>
+  </div>
+ </div>
+</div>
+
+<div data-role="page" id="showShoppingList">
+<div data-role="header"><h1>Saved List</h1></div>
+  <div data-role="main" class="ui-content">
+  <div id="allItemsChosen">
+  <ul data-role="listview" data-filter="true" data-input="#itemsFilter" data-autodividers="true" data-inset="true" id="shoppingList">
+  </ul>
+  <button onclick="backtomainpageagain()">Choose Another Item</button>
+  <button onclick="clearlocalstorage()">Clear Shopping List</button>
+</div>
+</div>
+</div>
+
+</body>
+</html>
